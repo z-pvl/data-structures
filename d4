@@ -1,0 +1,37 @@
+#include <iostream>
+#include <vector>
+#include "accum_t.h"
+#include "d_random.h"
+using namespace std;
+int main()
+{
+ // use to sum integers
+ 	accumulator<int> acc;
+ // count[i] is number times i occurs
+ 	vector<accumulator<int> > count(10);
+ // random number generator
+ 	randomNumber rnd;
+ 
+ 	int n, i;
+ 	cout << "Enter 6 integer values: ";
+ 
+ 	for (i=0;i < 6;i++)
+ 	{
+ 		cin >> n;
+ 		acc.addValue(n);
+ 	}
+ 
+ 	cout << "Average = " << double(acc.getTotal())/6.0 << endl  << endl;
+ 
+ // generate 1,000,000 random integers in the range 0 to 9.
+ // for random number n, add 1 to the object count[n]
+ 	for (i=0;i < 1000000;i++)
+ 	
+	 count[rnd.random(10)].addValue(1);
+ 
+ // output the counts
+ 	for (i=0;i < count.size();i++)
+ 	cout << i << ": " << count[i].getTotal() << endl;
+ 	
+	return 0;
+} 

@@ -1,0 +1,35 @@
+list<time24>  tList, amList, pmList;
+list<time24> :: iterator iter;
+iter = tList. begin();
+while (iter != tList.end())
+{	if (*iter < 720)
+	amList.push_back(*iter);
+	else  pmList.push_back(*iter);	
+iter++;	}
+
+
+
+
+#include "d_util.h"
+#include "d_search.h"
+#include <algorithm>
+#include <functional>
+using namespace std;
+template <typename T> 
+void count (const list<T>& aList, const T& item)
+{	int number = 0;
+	list<T> numList;
+	numList = aList;
+	int list<T>::iterator iter = numList.begin();
+	while (iter != numList.end())
+	{	iter = seqSearch(iter, numList.end(), item);
+		{	if (item == *iter)
+			number++;	iter++;
+	}}
+		cout << item << " - " << number << endl;	}
+int main()
+{	list<int> aList (20);
+		generate( aList.begin(), aList.end(), rand );
+	for (int j=0; j<5; j++)
+		{	count(aList, j);	}
+	return 0;	}

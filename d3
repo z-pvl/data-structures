@@ -1,0 +1,72 @@
+#include<iostream>
+#include "d_random.h"
+#include<cmath>
+#include "d_sort.h"
+
+using namespace std;
+
+template <typename T>
+int binSearch(const T arr[], int first, int last, const T& target)
+{
+	int mid;
+	T midvalue;					// object that is assigned arr[mid]
+	int count = 0;
+	
+	while (first < last)		// test for nonempty sublist
+	{
+		mid  = (first + last) / 2;
+		midvalue = arr[mid];
+		if (target == midvalue)
+		{
+			count++;			// count == before return
+			return count;		// have a match
+		}
+		// determine which sublist to search
+		else if (target < midvalue)
+			last = mid;			// search lower sublist, reset last
+		else
+			first = mid+1;		// search upper sublist, reset first
+		count += 2;				// count == and <		
+	}
+	return -count;				// target not found
+}
+
+int main()
+{
+	const int ARRSIZE = 50000,
+			  RANDOMVALUES = 100000,
+			  RANDOMLIMIT = 200000;
+			  
+	int arr[ARRSIZE];
+	int sumBinSearchSuccess = 0, sumBinSearchFail = 0;
+	int success = 0;
+	randomNumber rnd;
+	
+	for(int i = 0; i <ARRSIZE; i++)
+	arr[i] = rnd.random(RANDOMLIMIT - 1);
+	
+	selectionSort(arr, ARRSIZE);
+	
+	int t = rnd.random(RANDOMLIMIT-1);
+	
+	int result = binSearch(arr, 0, ARRSIZE, t);
+	
+	if (result > 0)
+	{
+		success++;
+		sumBinSearchSuccess = result;
+	}
+	else if (result <0)
+	{
+		sumBinSearchFail = result;
+	}
+	
+	cout << "Emperical average case: " << sumBinSearchSuccess/double(success) << endl;
+	
+	cout << "Emperical worst case: " << sumBinSearchFail/double(success-1) << endl
+			<< "theoretical bound for worst case: "
+			<< 2.0 * (1.0 + int(log(double(ARRSIZE))/log(2.0))) << endl;
+	return 0;
+	
+}
+
